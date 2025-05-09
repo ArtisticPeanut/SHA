@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 import os
-import combination  # Import the combination module for handling chat logic
-
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+import combination
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
