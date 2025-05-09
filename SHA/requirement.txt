@@ -1,0 +1,6 @@
+Flask
+transformers
+google-generativeai
+nltk
+beautifulsoup4
+requests
