@@ -4,4 +4,4 @@ google-generativeai
 nltk
 beautifulsoup4
 requests
-torch
+tensorflow
