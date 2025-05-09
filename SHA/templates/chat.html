@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Health Authority Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('../static/sha_back.jpeg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        header img {
+            max-width: 80px;
+            height: auto;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .info-section {
+            max-width: 800px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-section h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .info-section p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .info-section ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .info-section ul li {
+            margin-bottom: 5px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #chat-box {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        #chat-box p {
+            margin: 10px 0;
+        }
+
+        #chat-box .user-message {
+            text-align: right;
+            color: #333;
+        }
+
+        #chat-box .bot-message {
+            text-align: left;
+            color: #007bff;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type="submit"],
+        button[type="button"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover,
+        button[type="button"]:hover {
+            background-color: #0056b3;
+        }
+
+        #mic-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ff5722;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #mic-button:hover {
+            background-color: #e64a19;
+        }
+
+        #mic-button::after {
+            content: "Click to speak";
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        #mic-button:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='sha.jpeg') }}" alt="SHA Logo">
+        <h1>Social Health Authority Assistant</h1>
+    </header>
+
+    <section class="info-section">
+        <h2>Introducing Social Health Authority (SHA)</h2>
+        <p>Ensuring a healthier, more equitable future for all through comprehensive coverage and quality care without
+            financial worry.</p>
+        <h3>Overview</h3>
+        <p>SHA facilitates healthcare services from enlisted providers by pooling contributions—ensuring equitable
+            distribution of quality healthcare.</p>
+        <p>The Social Health Authority is established under section 25 of the Act and is utilized to pool all
+            contributions made under the Act.</p>
+        <p>SHA ensures that every resident in Kenya can access a comprehensive range of quality health services they
+            need without the burden of financial hardship.</p>
+        <h3>Benefits</h3>
+        <ul>
+            <li>Preventive, Promotive, Curative, Rehabilitative, and Palliative health services.</li>
+            <li>Provided at level 4, 5, and 6 health facilities under the fund.</li>
+        </ul>
+        <h3>Who Qualifies to Register?</h3>
+        <p>Every person resident in Kenya is required to apply for registration to the Authority as a member of the
+            Social Health Authority within ninety days upon the coming into force of these Regulations.</p>
+        <h3>What is Covered?</h3>
+        <p>The Social Health Authority covers integrated preventive, promotive, curative, rehabilitative, and palliative
+            health services at level 4, 5, and 6 health facilities.</p>
+        <p>This includes emergency services, critical care services, and treatment of chronic illnesses beyond the
+            essential healthcare benefits package.</p>
+    </section>
+
+    <div class="container">
+        <div id="chat-box">
+            <p class="bot-message"><strong>SHA Bot:</strong> Hello! How can I assist you today?</p>
+        </div>
+        <form onsubmit="sendMessage(event)">
+            <input type="text" id="user-input" placeholder="Type your message here..." required>
+            <button type="submit">Send</button>
+            <button type="button" id="mic-button">🎤</button>
+        </form>
+    </div>
+
+    <script>
+        const micButton = document.getElementById("mic-button");
+        const userInput = document.getElementById("user-input");
+
+        // Check if the browser supports the Web Speech API
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+            const recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            micButton.addEventListener("click", () => {
+                recognition.start();
+            });
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                userInput.value = transcript; // Set the transcribed text in the input field
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Speech recognition error:", event.error);
+            };
+        } else {
+            micButton.disabled = true;
+            micButton.title = "Speech recognition not supported in this browser.";
+        }
+
+        function sendMessage(event) {
+            event.preventDefault();
+
+            const userMessage = userInput.value;
+            const chatBox = document.getElementById("chat-box");
+
+            // Display user message
+            const userMessageElement = document.createElement("p");
+            userMessageElement.className = "user-message";
+            userMessageElement.innerHTML = `<strong>You:</strong> ${userMessage}`;
+            chatBox.appendChild(userMessageElement);
+
+            // Display "Thinking..." message
+            const botMessageElement = document.createElement("p");
+            botMessageElement.className = "bot-message";
+            botMessageElement.innerHTML = `<strong>SHA Bot:</strong> Thinking... &#x1F914;`;
+            chatBox.appendChild(botMessageElement);
+
+            // Scroll to the bottom of the chat box
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Send user message to the server
+            fetch("/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: userMessage })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Replace "Thinking..." with the bot's response
+                    if (data.bot_response) {
+                        simulateTyping(botMessageElement, data.bot_response);
+                    } else {
+                        botMessageElement.innerHTML = `<strong>SHA Bot:</strong> Sorry, I couldn't process your request.`;
+                    }
+                })
+                .catch(error => {
+                    botMessageElement.innerHTML = `<strong>SHA Bot:</strong> An error occurred. Please try again.`;
+                    console.error("Error:", error);
+                });
+
+            // Clear the input field
+            userInput.value = "";
+        }
+
+        function simulateTyping(element, text) {
+            let index = 0;
+            element.innerHTML = `<strong>SHA Bot:</strong> `;
+            const typingInterval = setInterval(() => {
+                if (index < text.length) {
+                    element.innerHTML += text.charAt(index);
+                    index++;
+                } else {
+                    clearInterval(typingInterval);
+                }
+            }, 50);
+        }
+    </script>
+</body>
+
+</html>
